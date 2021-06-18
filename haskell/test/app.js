@@ -283,7 +283,7 @@ const flatten = (arr) => {
   }
 };
 
-describe.only("Eliminate consecutive duplicates of list elements", () => {
+describe("Eliminate consecutive duplicates of list elements", () => {
   context("if function is called without the list", () => {
     it("should return undefined", () => {
       let result = unique();
@@ -301,7 +301,7 @@ describe.only("Eliminate consecutive duplicates of list elements", () => {
       let result = unique([
         1, 2, 2, 5, 3, 3, 5, 5, 7, 8, 7, 7, 8, 8, 9, 9, 9, 8, 8, 2, 2,
       ]);
-      expect(result).to.be.eql([1,2,5,3,5,7,8,7,8,9,8,2]);
+      expect(result).to.be.eql([1, 2, 5, 3, 5, 7, 8, 7, 8, 9, 8, 2]);
     });
   });
 });
@@ -320,3 +320,113 @@ const unique = (arr) => {
     return res;
   }
 };
+
+describe("Pack consecutive duplicates of list elements into sublists. If a list contains repeated elements they should be placed in separate sublists.", () => {
+  context("if function is called without the list", () => {
+    it("should return undefined", () => {
+      let result = subList();
+      expect(result).to.be.eql(undefined);
+    });
+  });
+
+  context("if function is called with empty list", () => {
+    it("should return empty list", () => {
+      let result = subList([]);
+      expect(result).to.be.eql([]);
+    });
+  });
+
+  context("if function is called with empty list", () => {
+    it("should return empty list", () => {
+      let result = subList([]);
+      expect(result).to.be.eql([]);
+    });
+  });
+
+  context(
+    "if function is called with list of values it should return separate sublists",
+    () => {
+      it("should return empty list", () => {
+        let result = subList([1, 3, 2, 2, 3, 3, 4, 4,5,5,3,4,4,8,9,9]);
+        expect(result).to.be.eql([
+          [1],
+          [3],
+          [2,2],
+          [3,3],
+          [4,4],
+          [5,5],
+          [3],
+          [4,4],
+          [8],
+          [9,9]
+        ]);
+      });
+    }
+  );
+});
+
+const subList = (arr) => {
+  if (arr) {
+    if (arr.length === 0) {
+      return arr;
+    }
+
+    let res = [];
+    let sub = [];
+    for (let x of arr) {
+      if (!sub.includes(x) && sub.length !== 0) {
+        res.push(sub);
+        sub = [];
+      }
+
+      sub.push(x);
+    }
+    res.push(sub);
+
+    return res;
+  }
+};
+
+
+describe.only('',() =>{
+    context("if function is called without the list", () => {
+      it("should return undefined", () => {
+        let result = encode();
+        expect(result).to.be.eql(undefined);
+      });
+    });
+
+    context("if function is called with empty list", () => {
+      it("should return empty list", () => {
+        let result = encode([]);
+        expect(result).to.be.eql([]);
+      });
+    });
+    context("if function is called list of elements encoded value should return ", () => {
+      it("should return encoded list", () => {
+        let result = encode(["w", "w", "w", "a", "a", "a", "b", "b", "b"]);
+        expect(result).to.be.eql([[3, 'w'], [3, 'a'], [3, 'b']]);
+      });
+    });
+})
+
+function encode(code) {
+  if (code) {
+    if (code.length === 0) {
+      return code;
+    }
+
+    let encode = [];
+
+    for (let i = 0; i < code.length; i++) {
+      let count = 1;
+      for (let j = i; j < code.length; j++) {
+        if (code[i] !== code[j + 1]) break;
+        count++;
+        i++;
+      }
+      encode.push([count, code[i]]);
+    }
+    return encode;
+  }
+}

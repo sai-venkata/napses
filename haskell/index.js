@@ -1,20 +1,22 @@
-const unique = (arr) => {
-  if (arr) {
-    if (arr.length === 0) {
-      return arr;
+function encode(code) {
+  if (code) {
+    if (code.length === 0) {
+      return code;
     }
 
-    let res = [arr[0]];
-    for (let x = 1 ; x < arr.length;x++) {
-        if(arr[x] !== res[res.length - 1]){
-          
-          res.push(arr[x])
-        }
+    let encode = [];
+
+    for (let i = 0; i < code.length; i++) {
+      let count = 1;
+      for (let j = i; j < code.length; j++) {
+        if (code[i] !== code[j + 1]) break;
+        count++;
+        i++;
+      }
+     encode.push([count, code[i]]);
     }
-    return res;
+    return encode;
   }
-};
+}
 
-let result = unique([1, 2, 2, 3, 3, 5, 5, 7, 8, 7, 7, 8, 8, 9,2]);
-
-console.log(result)
+encode(["w", "w", "w", "a", "a", "a", "b", "b", "b"]);
