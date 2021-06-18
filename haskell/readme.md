@@ -1,6 +1,5 @@
-<---------TDD (TEST DRIVEN DEVELOPMENT) --------------->
-
-STEPS : 
--> write a test that fails
-->write simple code that will pass the test
-->Refactor
+# TDD (TEST DRIVEN DEVELOPMENT)
+## STEPS : 
+- Write a test that fails
+- Write simple code that will pass the test
+- Refactor
